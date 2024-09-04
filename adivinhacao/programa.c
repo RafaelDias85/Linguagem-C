@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>
 
 #define NUMERO_TENTATIVAS 5
@@ -14,15 +15,17 @@ int main(void)
     printf("*******************************************\n");
 
     // for (int i = 1; i <= NUMERO_TENTATIVAS; i++)
-    int numeroSecreto, chute;
-    int i = 1;
+    int numeroSecreto = 42;
+    int chute;
+    int tentativas = 1;
+    // int pontos = 1000;
+
+    double pontos = 1000;
+
     while (1)
     {
-        // declarando uma variavel do tipo inteiro e iniciando ela
-        numeroSecreto = 42;
 
-        printf("tentativa %d\n", i);
-
+        printf("%dª tentativa\n", tentativas);
         printf("Qual é o seu chute? \n");
 
         scanf("%d", &chute); // operador "&" (endereço de) no caso do scanf retorna o endereço na memória
@@ -45,16 +48,24 @@ int main(void)
         else if (maior)
         {
             printf("o chute é maior que o numero secreto!!!\n");
-            printf("você errou\n");
-            printf("Tente novamente\n");
         }
         else
         {
             printf("O chute é menor que o Numero Secreto!!!\n");
-            printf("você errou\n");
-            printf("Tente novamente\n");
         }
-        i++;
+        tentativas++;
+
+        // casting - converte para qualquer tipo
+        //abs traz o numero absoluto!
+        double pontosPerdidos = abs((double)(chute - numeroSecreto) / (double)2);
+        
+        // if (pontosPerdidos < 0)
+        // {
+        //     pontosPerdidos = pontosPerdidos * -1;
+        // }
+        // pontos = pontos - pontosPerdidos;
     }
-    printf("Fim de Jogo.");
+    printf("Fim de Jogo.\n");
+    printf("Você acertou na %dª Tentativa\n", tentativas);
+    printf("Total de Pontos: %.1f\n", pontos);
 }
