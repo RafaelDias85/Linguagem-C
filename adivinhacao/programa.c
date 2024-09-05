@@ -3,8 +3,6 @@
 #include <locale.h>
 #include <time.h>
 
-#define NUMERO_TENTATIVAS 5
-
 int main(void)
 {
 
@@ -13,30 +11,51 @@ int main(void)
     // imprime o cabeçalho do Jogo!
     printf("*******************************************\n");
     printf("* Bem vindo ao nosso Jogo de Adivinhação! *\n");
-    printf("*******************************************\n");
+    printf("*******************************************\n \n");
 
     int segundos = time(0);
     srand(segundos);
 
     int numeroGrande = rand();
-
     int numeroSecreto = numeroGrande % 100;
     int chute;
     int tentativas = 1;
-    // int pontos = 1000;
-
+    int acertou = 0;
     double pontos = 1000;
 
-    while (1)
+    int nivel;
+
+    printf("Qual o nivel de dificuldade?\n");
+    printf("(1) Facil - (2) Médio - (3) Dificil\n \n");
+    printf("Escolha:\n");
+    scanf("%d", &nivel);
+
+    int numeroTentativas;
+    
+    switch (nivel)
+    {
+    case 1:
+        numeroTentativas = 15;
+        break;
+    case 2:
+        numeroTentativas = 10;
+        break;
+    default:
+        numeroTentativas = 5;
+        break;
+    }
+
+    printf("numero de tentativas %d \n", numeroTentativas);
+
+    for (int i = 1; i <= numeroTentativas; i++)
     {
 
         printf("%dª tentativa\n", tentativas);
         printf("Qual é o seu chute? \n");
 
         scanf("%d", &chute); // operador "&" (endereço de) no caso do scanf retorna o endereço na memória
-        printf("O seu chute foi %d\n", chute);
 
-        int acertou = chute == numeroSecreto;
+        acertou = chute == numeroSecreto;
         int maior = chute > numeroSecreto;
 
         if (chute < 0)
@@ -47,23 +66,22 @@ int main(void)
 
         if (acertou)
         {
-            printf("Prabéns o Numero Secreto é %d e você Acertou\n", numeroSecreto);
             break;
         }
         else if (maior)
         {
-            printf("o chute é maior que o numero secreto!!!\n");
+            printf("o chute é maior que o numero secreto!!!\n \n");
         }
         else
         {
-            printf("O chute é menor que o Numero Secreto!!!\n");
+            printf("O chute é menor que o Numero Secreto!!!\n \n");
         }
         tentativas++;
 
         // casting - converte para qualquer tipo
-        //abs traz o numero absoluto!
+        // abs traz o numero absoluto!
         double pontosPerdidos = abs((double)(chute - numeroSecreto) / (double)2);
-        
+
         if (pontosPerdidos < 0)
         {
             pontosPerdidos = pontosPerdidos * -1;
@@ -71,7 +89,17 @@ int main(void)
 
         pontos = pontos - pontosPerdidos;
     }
+
     printf("Fim de Jogo.\n");
-    printf("Você acertou na %dª Tentativa\n", tentativas);
-    printf("Total de Pontos: %.1f\n", pontos);
+
+    if (acertou)
+    {
+        printf("você Ganhou!!!\n");
+        printf("Você acertou na %dª Tentativa\n", tentativas);
+        printf("Total de Pontos: %.1f\n", pontos);
+    }
+    else
+    {
+        printf("voce errou, tente novamente");
+    }
 }
