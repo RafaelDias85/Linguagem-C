@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h>
 
 #define NUMERO_TENTATIVAS 5
 
@@ -14,8 +15,12 @@ int main(void)
     printf("* Bem vindo ao nosso Jogo de Adivinhação! *\n");
     printf("*******************************************\n");
 
-    // for (int i = 1; i <= NUMERO_TENTATIVAS; i++)
-    int numeroSecreto = 42;
+    int segundos = time(0);
+    srand(segundos);
+
+    int numeroGrande = rand();
+
+    int numeroSecreto = numeroGrande % 100;
     int chute;
     int tentativas = 1;
     // int pontos = 1000;
@@ -59,11 +64,12 @@ int main(void)
         //abs traz o numero absoluto!
         double pontosPerdidos = abs((double)(chute - numeroSecreto) / (double)2);
         
-        // if (pontosPerdidos < 0)
-        // {
-        //     pontosPerdidos = pontosPerdidos * -1;
-        // }
-        // pontos = pontos - pontosPerdidos;
+        if (pontosPerdidos < 0)
+        {
+            pontosPerdidos = pontosPerdidos * -1;
+        }
+
+        pontos = pontos - pontosPerdidos;
     }
     printf("Fim de Jogo.\n");
     printf("Você acertou na %dª Tentativa\n", tentativas);
